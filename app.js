@@ -3,52 +3,35 @@ const ejs = require('ejs');
 
 const app = express();
 
-app.set('view engine', ejs);
+app.use(express.static('public'));
+
+app.set('view engine', 'ejs');
 
 app.listen(3009);
 
-/*
-acesso a rota index - COM EXPRESS
-app.get('/',(req,res) => {
-     res.sendFile('./views/index.html', { root: __dirname });
- });
- */
-
-/*
- acesso a rota inicio - COM EXPRESS
-app.get('/inicio',(req,res) => {
-    res.sendFile('./views/inicio.html', { root: __dirname });
-});
-*/
-
-/*
-acesso a rota projetos - COM EXPRESS
-app.get('/projetos', (req,res) => {
-    res.sendFile('./views/projetos.html', { root: __dirname });
-});
-*/
-
-/*
-acesso a rota sobre - COM EXPRESS
-app.get('/sobre', (req,res) => {
-    res.sendFile('./views/sobre.html', { root: __dirname });
-});
-*/
-
-/*
-acesso a rota ERRO - COM EXPRESS
-app.use((req,res) => {
-    res.status(404).sendFile('./views/404.html', { root: __dirname });
-})
-*/
-
-app.get('/',(req,res) => {
+app.get('/', (req,res) => {
     const menuResponsivo = [
         {titulo: 'Inicio', conteudo: 'Aqui eu coloquei o conteúdo do inicio do projeto parciais-nodejs utilizando biblioteca express + ejs'},
         {titulo: 'Projetos', conteudo: 'Aqui eu coloco os projetos que eu estou aprendendo utilizando nodejs com as bibliotecas express + ejs'},
         {titulo: 'Sobre', conteudo: 'Aqui eu coloco algo sobre meu projeto utilizano nodejs com as bibliotecas express + ejs'},
     ];
-    res.render('index', {titulo: 'inicio', menuResponsivo})
+    res.render('index', { titulo: 'inicio', menuResponsivo});
+});
+
+app.get('/inicio', (req,res) => {
+    res.render('inicio', { titulo: 'inicio'});
+});
+
+app.get('/projetos', (req,res) => {
+    res.render('projetos', { titulo: 'Projetos'});
+});
+
+app.get('/sobre', (req,res) => {
+    res.render('sobre', { titulo: 'Sobre'});
+});
+
+app.use((req,res) => {
+    res.status(404).render('404', { titulo: '404'});
 });
 
 
